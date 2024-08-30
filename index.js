@@ -43,6 +43,18 @@ app.delete('/api/persons/:id', (request, response) => {
     })
 })
 
+app.put('/api/persons/:id', (request, response) => {
+  const {name, number } = request.body;
+  Person.findByIdAndUpdate(
+    request.params.id, 
+    { name, number }, 
+    { new: true, runValidators: true, context: 'query' }
+  )
+  .then(updatedPerson => {
+    response.json(updatedPerson)
+  })
+})
+
 /*
 const generateId = () => {
   const maxId = persons.length > 0
